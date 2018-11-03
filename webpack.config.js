@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = false;
 
 module.exports = {
   entry: {
@@ -47,11 +46,11 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         enforce: 'pre',
-        exclude: /node_modules/
+        exclude: /(node_modules|tests)/
       },
       {
         test: /\.js|.ts$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules|bower_components|tests)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -67,7 +66,7 @@ module.exports = {
       {
         test: /\.ts$/,
         enforce: 'pre',
-        exclude: /node_modules/,
+        exclude: /(node_modules|tests)/,
         use: [
           {
             loader: 'tslint-loader',

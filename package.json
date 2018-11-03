@@ -2,28 +2,33 @@
   "name": "webpack-typescript-starter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
     "start": "webpack-dev-server --open",
-    "lint": "tslint --type-check"
+    "lint": "tslint --type-check",
+    "test": "jest --forceExit --verbose",
+    "test-coverage": "jest --forceExit --verbose --collectCoverageFrom=src/**/*.ts --coverage",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
   },
-  "author": "",
+  "author": "Krzysztof Bogusz",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@types/jest": "^23.3.9",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
+    "ts-jest": "^23.10.4",
     "ts-loader": "^5.3.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",
@@ -32,5 +37,6 @@
     "webpack": "^4.24.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
-  }
+  },
+  "dependencies": {}
 }

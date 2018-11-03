@@ -1,9 +1,6 @@
-import { createComponet } from './app.componet';
-import './styles.scss';
+import { createComponet } from './modules/app.componet';
+import './styles/styles.scss';
 
-const test = (): string => {
-  const num: number = 5;
-  return 'dupa';
-};
+// Import all project files to compile;
 
-createComponet().innerHTML = 'hafa';
+createComponet().innerHTML = 'Hello TypeScript!';
