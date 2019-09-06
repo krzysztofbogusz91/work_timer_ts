@@ -1,8 +1,9 @@
-import { createComponet } from './modules/app.componet';
+import { Controller } from './controller/controller.module';
+import { Model } from './model/model.module';
 import './styles/styles.scss';
+import { View } from './view/view.module';
 
-// Import all project files to compile
-// TODO ADD FAVICON AND ASSETS TO WEBPACK
-document.addEventListener('DOMContentLoaded', () => {
-  createComponet().innerHTML = 'Hello TypeScript!';
-});
+const app: any = new Controller(new Model(), new View());
+// ts:lint:disable:no-console
+app.model.addTask('Take a nap');
+console.log(app.model.getTasks());

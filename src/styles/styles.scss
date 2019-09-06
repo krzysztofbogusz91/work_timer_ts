@@ -1,3 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
 body {
-  background-color: #cacacc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div {
+  background-color: #c2c2f1;
+}
+
+h1 {
+  color: #121235;
+  text-transform: uppercase;
+  margin: 10px;
+}
+
+button {
+  background-color: #6666b6;
+  color: white;
+  padding: 7px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+form {
+}
+
+input {
+  padding: 7px 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+ul {
+  li {
+  }
 }
