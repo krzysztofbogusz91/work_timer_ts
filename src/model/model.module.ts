@@ -4,7 +4,6 @@ export class Model {
   private tasks: any[];
   constructor() {
     this.tasks = JSON.parse((localStorage as any).getItem('todos')) || [];
-    console.log(this.tasks);
     }
 
   public addTask(taskText) {
@@ -13,7 +12,6 @@ export class Model {
       id: this.tasks.length > 0 ? this.tasks[this.tasks.length - 1].id + 1 : 1,
       text: taskText,
     };
-    console.log(task);
     this.tasks = [...this.tasks, task];
 
     this._commit(this.tasks);
@@ -25,7 +23,6 @@ export class Model {
     }
 
   public deleteTask(id) {
-    console.log('delet atask', id);
     this.tasks = this.tasks.filter((task) => task.id !== id);
     this.onTasksChanged(this.tasks);
     this._commit(this.tasks);

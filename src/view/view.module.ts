@@ -1,4 +1,8 @@
+import { Element } from './element.factory';
+
 export class View {
+  public factory;
+  public crateElem;
   private app: any;
   private title: any;
   private form: any;
@@ -7,7 +11,12 @@ export class View {
   private list: any;
   private temporaryTaskText: any;
 
-  constructor() {
+  constructor(factory = new Element()) {
+    this.factory = factory;
+    console.log(factory);
+
+    this.crateElem = this.factory.crateElement;
+
     this.app = this.getElem('#root');
 
     this.title = this.crateElem('h1');
@@ -31,12 +40,12 @@ export class View {
     this._initLocalListeners();
   }
 
-  public crateElem(tag: string, className?: string): any {
-    const elem: any = document.createElement(tag);
-    if (className) elem.classList.add(className);
+  // public crateElem(tag: string, className?: string): any {
+  //   const elem: any = document.createElement(tag);
+  //   if (className) elem.classList.add(className);
 
-    return elem;
-  }
+  //   return elem;
+  // }
 
   public getElem(selector: string): any {
     const elem = document.querySelector(selector);
@@ -65,7 +74,7 @@ export class View {
         span.contentEditable = true;
         span.classList.add('editable');
 
-        if (task.complete) {
+        if (task.completed) {
           const strike = this.crateElem('s');
           strike.textContent = task.text;
           span.append(strike);
@@ -123,7 +132,7 @@ export class View {
   public bindEditTask(handler) {
     this.list.addEventListener('focusout', (event) => {
       if (this.temporaryTaskText) {
-        const id = parseInt(event.target.parentElement.id, 2);
+        const id = parseInt(event.target.parentElement.id);
 
         handler(id, this.temporaryTaskText);
         this.temporaryTaskText = '';
