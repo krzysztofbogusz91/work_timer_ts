@@ -55,8 +55,8 @@ export class View {
     } else {
       tasksList.forEach((task) => {
         const li = this.crateElem('li');
-        li.id = task.id;
 
+        li.id = task.id;
         const check = this.crateElem('input');
         check.type = 'checkbox';
         check.checked = task.completed;
@@ -96,7 +96,7 @@ export class View {
   public bindDeleteTask(handler) {
     this.list.addEventListener('click', (event) => {
       if (event.target.className === 'delete') {
-        const id = parseInt(event.target.parentElement.id, 2);
+        const id = parseInt(event.target.parentElement.id);
 
         handler(id);
       }
@@ -106,8 +106,7 @@ export class View {
   public bindToggleTask(handler) {
     this.list.addEventListener('change', (event) => {
       if (event.target.type === 'checkbox') {
-        const id = parseInt(event.target.parentElement.id, 2);
-
+        const id = parseInt(event.target.parentElement.id);
         handler(id);
       }
     });

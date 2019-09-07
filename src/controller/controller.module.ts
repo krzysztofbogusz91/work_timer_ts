@@ -7,13 +7,13 @@ export class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
-
+    this.model.bindTaskListChange(this.onTaskListChange);
     this.view.bindAddTask(this.handleAddTask);
     this.view.bindDeleteTask(this.handleDeleteTask);
     this.view.bindToggleTask(this.handleToggleTask);
     this.view.bindEditTask(this.handleEditTask);
 
-    this.model.bidTaskListChange(this.onTaskListChange);
+    this.onTaskListChange(this.model.getTasks());
   }
 
   public handleAddTask = (task) => {
