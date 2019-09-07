@@ -1,11 +1,34 @@
-
+import * as moment from 'moment';
+interface ITimerCard {
+  id: number;
+  date: any;
+  time: number;
+  isToday: boolean;
+  tasks: any[];
+}
 export class Model {
   public onTasksChanged;
+  private timeCards: ITimerCard[];
   private tasks: any[];
   constructor() {
     this.tasks = JSON.parse((localStorage as any).getItem('todos')) || [];
+    this.createTimeCards();
     }
+  public createTimeCards(): ITimerCard[] {
+    const today = moment().toDate();
 
+    const firstDay = moment().subtract(15, 'days');
+
+    const timeCards = [...new Array(30)].map((el, i) => ({
+      date: firstDay.clone().add(i + 1, 'day').toDate(),
+      id: i + 1,
+      isToday: false,
+      tasks: this.tasks,
+      time: 8 * 3600,
+    }));
+    console.log(timeCards);
+    return timeCards;
+  }
   public addTask(taskText) {
     const task = {
       completed: false,
