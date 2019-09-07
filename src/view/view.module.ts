@@ -1,7 +1,9 @@
 import { Element } from './element.factory';
+import { ListElement } from './list-element.factory';
 
 export class View {
   public factory;
+  public listFactory;
   public crateElem;
   private app: any;
   private title: any;
@@ -11,10 +13,9 @@ export class View {
   private list: any;
   private temporaryTaskText: any;
 
-  constructor(factory = new Element()) {
+  constructor(factory = new Element(), listFactory = new ListElement()) {
     this.factory = factory;
-    console.log(factory);
-
+    this.listFactory = listFactory;
     this.crateElem = this.factory.crateElement;
 
     this.app = this.getElem('#root');
@@ -40,13 +41,6 @@ export class View {
     this._initLocalListeners();
   }
 
-  // public crateElem(tag: string, className?: string): any {
-  //   const elem: any = document.createElement(tag);
-  //   if (className) elem.classList.add(className);
-
-  //   return elem;
-  // }
-
   public getElem(selector: string): any {
     const elem = document.querySelector(selector);
     return elem;
@@ -62,32 +56,7 @@ export class View {
       p.textContent = 'Nothing to do ;)';
       this.list.append(p);
     } else {
-      tasksList.forEach((task) => {
-        const li = this.crateElem('li');
-
-        li.id = task.id;
-        const check = this.crateElem('input');
-        check.type = 'checkbox';
-        check.checked = task.completed;
-
-        const span = this.crateElem('span');
-        span.contentEditable = true;
-        span.classList.add('editable');
-
-        if (task.completed) {
-          const strike = this.crateElem('s');
-          strike.textContent = task.text;
-          span.append(strike);
-        } else {
-          span.textContent = task.text;
-        }
-
-        const deleteButton = this.crateElem('button', 'delete');
-        deleteButton.textContent = 'Delete';
-        li.append(check, span, deleteButton);
-
-        this.list.append(li);
-      });
+      this.listFactory.createListElements(tasksList, this.list);
     }
   }
 
