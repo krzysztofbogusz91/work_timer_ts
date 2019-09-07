@@ -1,13 +1,9 @@
+
 export class Model {
+  public onTasksChanged;
   private tasks: any[];
   constructor() {
-    this.tasks = [
-      {
-        completed: false,
-        id: 0,
-        text: 'my tax task',
-      },
-    ];
+    this.tasks = JSON.parse((localStorage as any).getItem('todos')) || [];
   }
 
   public addTask(taskText) {
@@ -18,26 +14,39 @@ export class Model {
     };
 
     this.tasks = [task, ...this.tasks];
+
+    this.onTasksChanged(this.tasks);
+    this._commit(this.tasks);
   }
 
   public editTask(id, updatedText) {
-    this.tasks = this.tasks.map( (task) => task.id === id ?
-       {...task, text: updatedText } :
-       task);
-  }
+    this.tasks = this.tasks.map((task) => task.id === id ? { ...task, text: updatedText } : task);
+    this.onTasksChanged(this.tasks);
+    this._commit(this.tasks);
+    }
 
   public deleteTask(id) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
+    this.onTasksChanged(this.tasks);
+    this._commit(this.tasks);
   }
 
   public toggleTask(id) {
-    this.tasks = this.tasks.map((task) => task.id === id ?
-       {...task, completed: !task.completed } :
-        task);
+    this.tasks = this.tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task);
+    this.onTasksChanged(this.tasks);
+    this._commit(this.tasks);
   }
 
   public getTasks() {
     return this.tasks;
   }
+  public bidTaskListChange(callback) {
+    this.onTasksChanged = callback;
+  }
 
+  private _commit(tasks) {
+    this.onTasksChanged(tasks);
+    localStorage.setItem('todos', JSON.stringify(tasks));
+  }
 }
