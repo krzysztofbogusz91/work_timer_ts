@@ -8,25 +8,23 @@ interface ITimerCard {
 }
 export class Model {
   public onTasksChanged;
-  private timeCards: ITimerCard[];
+  public timeCards: ITimerCard[];
   private tasks: any[];
   constructor() {
     this.tasks = JSON.parse((localStorage as any).getItem('todos')) || [];
+    this.timeCards = JSON.parse((localStorage as any).getItem('timeCards')) || this.createTimeCards();
     this.createTimeCards();
     }
-  public createTimeCards(): ITimerCard[] {
-    const today = moment().toDate();
-
+  public createTimeCards(tasks?): ITimerCard[] {
     const firstDay = moment().subtract(15, 'days');
 
     const timeCards = [...new Array(30)].map((el, i) => ({
       date: firstDay.clone().add(i + 1, 'day').toDate(),
       id: i + 1,
-      isToday: false,
+      isToday: firstDay.clone().add(i + 1, 'day').format('yyyymmdd') === moment().format('yyyymmdd'),
       tasks: this.tasks,
       time: 8 * 3600,
     }));
-    console.log(timeCards);
     return timeCards;
   }
   public addTask(taskText) {
@@ -47,7 +45,6 @@ export class Model {
 
   public deleteTask(id) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
-    this.onTasksChanged(this.tasks);
     this._commit(this.tasks);
   }
 

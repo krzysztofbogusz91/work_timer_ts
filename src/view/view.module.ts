@@ -6,6 +6,7 @@ export class View {
   public listFactory;
   public crateElem;
   private app: any;
+  private cardsContainer: any;
   private title: any;
   private form: any;
   private input: any;
@@ -19,6 +20,8 @@ export class View {
     this.crateElem = this.factory.crateElement;
 
     this.app = this.getElem('#root');
+
+    this.cardsContainer = this.factory.crateElement('ul', 'cards-container');
 
     this.title = this.crateElem('h1');
     this.title.textContent = 'Tasks';
@@ -36,7 +39,7 @@ export class View {
 
     this.form.append(this.input, this.submitButton);
 
-    this.app.append(this.title, this.form, this.list);
+    this.app.append(this.cardsContainer);
 
     this._initLocalListeners();
   }
@@ -44,6 +47,21 @@ export class View {
   public getElem(selector: string): any {
     const elem = document.querySelector(selector);
     return elem;
+  }
+
+  public displayCards(cardList) {
+    while (this.cardsContainer.firstChild) {
+      this.cardsContainer.removeChild(this.list.firstChild);
+    }
+
+    cardList.forEach((card) => {
+      const li = this.factory.crateElement('li');
+      li.innerText = card.date;
+      const input = this.factory.crateElement('input');
+      li.append(input);
+      this.listFactory.createListElements(card.tasks, li);
+      this.cardsContainer.append(li);
+    });
   }
 
   public displayTasks(tasksList: any[]) {
@@ -61,7 +79,9 @@ export class View {
   }
 
  public bindAddTask(handler) {
-    this.form.addEventListener('submit', (event) => {
+  const cards = this.cardsContainer.childNodes;
+  console.log(cards);
+  this.form.addEventListener('submit', (event) => {
       event.preventDefault();
 
       if (this._taskText) {

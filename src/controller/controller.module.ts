@@ -13,7 +13,8 @@ export class Controller {
     this.view.bindToggleTask(this.handleToggleTask);
     this.view.bindEditTask(this.handleEditTask);
 
-    this.onTaskListChange(this.model.getTasks());
+    // this.onTaskListChange(this.model.getTasks());
+    this.onCardListChange(this.model.createTimeCards());
   }
 
   public handleAddTask = (task) => {
@@ -34,6 +35,10 @@ export class Controller {
 
   public onTaskListChange = (tasks) => {
     this.view.displayTasks(tasks);
+  }
+
+  public onCardListChange = (cards) => {
+    this.view.displayCards(cards);
   }
 
 }
