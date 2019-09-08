@@ -12,6 +12,12 @@ export class Model {
   private tasks: any[];
   constructor() {
     this.tasks = JSON.parse((localStorage as any).getItem('todos')) || [];
+    const task = {
+      completed: false,
+      id: this.tasks.length > 0 ? this.tasks[this.tasks.length - 1].id + 1 : 1,
+      text: 'taskText',
+    };
+    this.tasks = [...this.tasks, task];
     this.timeCards = JSON.parse((localStorage as any).getItem('timeCards')) || this.createTimeCards();
     this.createTimeCards();
     }
@@ -44,6 +50,7 @@ export class Model {
     }
 
   public deleteTask(id) {
+    console.log('delet');
     this.tasks = this.tasks.filter((task) => task.id !== id);
     this._commit(this.tasks);
   }

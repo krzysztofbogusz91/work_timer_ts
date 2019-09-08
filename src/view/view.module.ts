@@ -51,7 +51,7 @@ export class View {
 
   public displayCards(cardList) {
     while (this.cardsContainer.firstChild) {
-      this.cardsContainer.removeChild(this.list.firstChild);
+      this.cardsContainer.removeChild(this.cardsContainer.firstChild);
     }
 
     cardList.forEach((card) => {
@@ -59,7 +59,9 @@ export class View {
       li.innerText = card.date;
       const input = this.factory.crateElement('input');
       li.append(input);
-      this.listFactory.createListElements(card.tasks, li);
+      const ul = this.factory.crateElement('ul');
+      this.listFactory.createListElements(card.tasks, ul);
+      li.append(ul);
       this.cardsContainer.append(li);
     });
   }
@@ -80,7 +82,6 @@ export class View {
 
  public bindAddTask(handler) {
   const cards = this.cardsContainer.childNodes;
-  console.log(cards);
   this.form.addEventListener('submit', (event) => {
       event.preventDefault();
 
@@ -92,13 +93,28 @@ export class View {
   }
 
   public bindDeleteTask(handler) {
-    this.list.addEventListener('click', (event) => {
-      if (event.target.className === 'delete') {
-        const id = parseInt(event.target.parentElement.id);
+    const cards = this.cardsContainer.childNodes;
 
-        handler(id);
-      }
+    cards.forEach((card) => {
+      console.log(card.lastChild);
+      card.lastChild.addEventListener('click', (event) => {
+        console.log('event');
+        console.log(event);
+        if (event.target.className === 'delete') {
+          const id = parseInt(event.target.parentElement.id);
+          console.log('delete', id);
+          handler(id);
+        }
+      });
     });
+
+    // this.list.addEventListener('click', (event) => {
+    //   if (event.target.className === 'delete') {
+    //     const id = parseInt(event.target.parentElement.id);
+
+    //     handler(id);
+    //   }
+    // });
   }
 
   public bindToggleTask(handler) {

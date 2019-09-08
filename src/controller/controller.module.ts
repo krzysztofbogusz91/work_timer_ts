@@ -7,6 +7,8 @@ export class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
+    this.onCardListChange(this.model.createTimeCards());
+
     this.model.bindTaskListChange(this.onTaskListChange);
     this.view.bindAddTask(this.handleAddTask);
     this.view.bindDeleteTask(this.handleDeleteTask);
