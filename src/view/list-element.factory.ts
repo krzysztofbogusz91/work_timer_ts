@@ -8,7 +8,7 @@ export class ListElement extends Element {
  }
 
  public createListElement() {
-    const li = this.crateElement('li', 'task-li-elem');
+    const li = this.crateElement('li', 'task-list-element');
     return li;
 }
 
@@ -17,7 +17,8 @@ export class ListElement extends Element {
         const li = this.createListElement();
 
         li.id = task.id;
-        const check = this.crateElement('input');
+
+        const check = this.crateElement('input', 'regular-checkbox');
         check.type = 'checkbox';
         check.checked = task.completed;
 
@@ -35,9 +36,17 @@ export class ListElement extends Element {
 
         const deleteButton = this.crateElement('button', 'delete');
         deleteButton.textContent = 'Delete';
+        this.generateFlexView(li, check, span, deleteButton);
         li.append(check, span, deleteButton);
 
         parentElement.append(li);
       });
- }
+
+    }
+ private generateFlexView(parent, ...args) {
+      const divCreator = (cssClass = '') => this.crateElement('div', cssClass);
+      const argumentsList = [...Array.from(arguments).splice(1, arguments.length)];
+      console.log('parent', parent);
+      console.log('children', argumentsList);
+    }
 }

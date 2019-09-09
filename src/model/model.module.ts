@@ -37,7 +37,7 @@ export class Model {
           id: card.tasks.length > 0 ? card.tasks[card.tasks.length - 1].id + 1 : 1,
           text: value,
         };
-        card.tasks = [ task, ...card.tasks];
+        card.tasks = [...card.tasks, task];
       }
       return card;
     });

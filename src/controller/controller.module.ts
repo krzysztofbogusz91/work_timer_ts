@@ -34,10 +34,6 @@ export class Controller {
     this.model.toggleTask(id);
   }
 
-  public onTaskListChange = (tasks) => {
-    this.view.displayTasks(tasks);
-  }
-
   public onCardListChange = (cards) => {
     this.view.displayCards(cards);
   }

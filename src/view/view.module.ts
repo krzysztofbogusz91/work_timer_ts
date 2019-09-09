@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import { Element } from './element.factory';
 import { ListElement } from './list-element.factory';
 
@@ -7,11 +8,6 @@ export class View {
   public crateElem;
   private app: any;
   private cardsContainer: any;
-  private title: any;
-  private form: any;
-  private input: any;
-  private submitButton: any;
-  private list: any;
   private temporaryTaskText: any;
 
   constructor(factory = new Element(), listFactory = new ListElement()) {
@@ -22,22 +18,6 @@ export class View {
     this.app = this.getElem('#root');
 
     this.cardsContainer = this.factory.crateElement('ul', 'cards-container');
-
-    this.title = this.crateElem('h1');
-    this.title.textContent = 'Tasks';
-
-    this.form = this.crateElem('form');
-    this.input = this.crateElem('input');
-    this.input.type = 'text';
-    this.input.placeholder = 'Add task';
-    this.input.name = 'task';
-
-    this.submitButton = this.crateElem('button');
-    this.submitButton.textContent = 'Add task';
-
-    this.list = this.crateElem('ul', 'task-list');
-
-    this.form.append(this.input, this.submitButton);
 
     this.app.append(this.cardsContainer);
 
@@ -54,35 +34,35 @@ export class View {
       this.cardsContainer.removeChild(this.cardsContainer.firstChild);
     }
     cardList.forEach((card) => {
-      const li = this.factory.crateElement('li');
-      li.innerText = card.date;
+      const li = this.factory.crateElement('li', 'cards-container-element');
       li.id = card.id;
+
+      const dateHeader = this.factory.crateElement('h3', 'date-header');
+      dateHeader.innerText = moment(card.date).format('L');
+
+      const header = this.factory.crateElement('h2', 'card-header');
+      header.innerText = 'Worked: ' + moment.utc(card.time * 1000).format('HH:mm');
+
       const form = this.crateElem('form');
-      const input = this.factory.crateElement('input');
+
+      const input = this.factory.crateElement('input', 'add-task-input');
       input.classList.add('input-' + card.id);
+
       const submitButton = this.crateElem('button');
       submitButton.textContent = 'Add task';
-      form.append( input, submitButton);
+
+      form.append(dateHeader, header, input, submitButton);
+
       li.append(form);
-      const ul = this.factory.crateElement('ul');
+
+      const ul = this.factory.crateElement('ul', 'task-list');
+
       this.listFactory.createListElements(card.tasks, ul);
+
       li.append(ul);
+
       this.cardsContainer.append(li);
     });
-  }
-
-  public displayTasks(tasksList: any[]) {
-    while (this.list.firstChild) {
-      this.list.removeChild(this.list.firstChild);
-    }
-
-    if (tasksList.length === 0) {
-      const p = this.crateElem('p');
-      p.textContent = 'Nothing to do ;)';
-      this.list.append(p);
-    } else {
-      this.listFactory.createListElements(tasksList, this.list);
-    }
   }
 
  public bindAddTask(handler) {
