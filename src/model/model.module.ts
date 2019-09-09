@@ -8,6 +8,7 @@ interface ITimerCard {
 }
 export class Model {
   public onTasksChanged;
+  public onCardChanged;
   public timeCards: ITimerCard[];
   private tasks: any[];
   constructor() {
@@ -19,7 +20,7 @@ export class Model {
     };
     this.tasks = [...this.tasks, task];
     this.timeCards = JSON.parse((localStorage as any).getItem('timeCards')) || this.createTimeCards();
-    this.createTimeCards();
+    console.log(this.timeCards);
     }
   public createTimeCards(tasks?): ITimerCard[] {
     const firstDay = moment().subtract(15, 'days');
@@ -50,9 +51,14 @@ export class Model {
     }
 
   public deleteTask(id) {
-    console.log('delet');
-    this.tasks = this.tasks.filter((task) => task.id !== id);
-    this._commit(this.tasks);
+    const {cardId, taskId} = id;
+    this.timeCards = this.timeCards.map((card) => {
+      if (card.id === cardId) {
+        card.tasks = card.tasks.filter((task) => task.id !== taskId);
+      }
+      return card;
+    });
+    this._commit(this.timeCards);
   }
 
   public toggleTask(id) {
@@ -61,15 +67,18 @@ export class Model {
     this._commit(this.tasks);
   }
 
-  public getTasks() {
-    return this.tasks;
+  public getCards() {
+    return this.timeCards;
   }
   public bindTaskListChange(callback) {
     this.onTasksChanged = callback;
   }
+  public bindCardListChange(callback) {
+    this.onCardChanged = callback;
+  }
 
-  private _commit(tasks) {
-    this.onTasksChanged(tasks);
-    localStorage.setItem('todos', JSON.stringify(tasks));
+  private _commit(cards) {
+    this.onCardChanged(cards);
+    localStorage.setItem('timeCards', JSON.stringify(cards));
   }
 }

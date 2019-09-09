@@ -7,16 +7,15 @@ export class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
-    this.onCardListChange(this.model.createTimeCards());
 
-    this.model.bindTaskListChange(this.onTaskListChange);
+    // this.model.bindTaskListChange(this.onTaskListChange);
+    this.onCardListChange(this.model.timeCards);
+    this.model.bindCardListChange(this.onCardListChange);
     this.view.bindAddTask(this.handleAddTask);
     this.view.bindDeleteTask(this.handleDeleteTask);
     this.view.bindToggleTask(this.handleToggleTask);
     this.view.bindEditTask(this.handleEditTask);
 
-    // this.onTaskListChange(this.model.getTasks());
-    this.onCardListChange(this.model.createTimeCards());
   }
 
   public handleAddTask = (task) => {

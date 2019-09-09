@@ -50,13 +50,15 @@ export class View {
   }
 
   public displayCards(cardList) {
+    console.log('dis cards');
     while (this.cardsContainer.firstChild) {
       this.cardsContainer.removeChild(this.cardsContainer.firstChild);
     }
-
+    console.log(cardList);
     cardList.forEach((card) => {
       const li = this.factory.crateElement('li');
       li.innerText = card.date;
+      li.id = card.id;
       const input = this.factory.crateElement('input');
       li.append(input);
       const ul = this.factory.crateElement('ul');
@@ -96,25 +98,15 @@ export class View {
     const cards = this.cardsContainer.childNodes;
 
     cards.forEach((card) => {
-      console.log(card.lastChild);
       card.lastChild.addEventListener('click', (event) => {
-        console.log('event');
-        console.log(event);
         if (event.target.className === 'delete') {
-          const id = parseInt(event.target.parentElement.id);
-          console.log('delete', id);
-          handler(id);
+          console.log('add ev list');
+          const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
+          const taskId = parseInt(event.target.parentElement.id);
+          handler({cardId, taskId});
         }
       });
     });
-
-    // this.list.addEventListener('click', (event) => {
-    //   if (event.target.className === 'delete') {
-    //     const id = parseInt(event.target.parentElement.id);
-
-    //     handler(id);
-    //   }
-    // });
   }
 
   public bindToggleTask(handler) {
