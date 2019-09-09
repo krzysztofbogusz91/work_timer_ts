@@ -50,11 +50,9 @@ export class View {
   }
 
   public displayCards(cardList) {
-    console.log('dis cards');
     while (this.cardsContainer.firstChild) {
       this.cardsContainer.removeChild(this.cardsContainer.firstChild);
     }
-    console.log(cardList);
     cardList.forEach((card) => {
       const li = this.factory.crateElement('li');
       li.innerText = card.date;
@@ -92,10 +90,9 @@ export class View {
       event.preventDefault();
       const cardId = parseInt(event.target.parentElement.id);
       const value = (document.querySelector(`.input-${cardId}`) as any).value;
-      console.log(cardId, value);
-      if (this._taskText) {
-        handler(this._taskText);
-        this._resetTaskInput();
+      if (!!value) {
+        this._resetTaskInput(cardId);
+        handler({cardId, value});
       }
     });
   }
@@ -111,16 +108,17 @@ export class View {
   }
 
   public bindToggleTask(handler) {
-    this.list.addEventListener('change', (event) => {
+    this.cardsContainer.addEventListener('change', (event) => {
       if (event.target.type === 'checkbox') {
+        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
         const id = parseInt(event.target.parentElement.id);
-        handler(id);
+        handler({cardId, id});
       }
     });
   }
 
   public _initLocalListeners() {
-    this.list.addEventListener('input', (event) => {
+   this.cardsContainer.addEventListener('input', (event) => {
       if (event.target.className === 'editable') {
         this.temporaryTaskText = event.target.innerText;
       }
@@ -128,21 +126,17 @@ export class View {
   }
 
   public bindEditTask(handler) {
-    this.list.addEventListener('focusout', (event) => {
+    this.cardsContainer.addEventListener('focusout', (event) => {
       if (this.temporaryTaskText) {
         const id = parseInt(event.target.parentElement.id);
-
-        handler(id, this.temporaryTaskText);
+        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
+        handler({cardId, id, text: this.temporaryTaskText});
         this.temporaryTaskText = '';
       }
     });
   }
 
-  private get _taskText() {
-    return this.input.value;
-  }
-
-  private _resetTaskInput() {
-    this.input.value = '';
+  private _resetTaskInput(cardId) {
+    (document.querySelector(`.input-${cardId}`) as any).value = '';
   }
 }

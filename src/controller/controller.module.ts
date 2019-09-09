@@ -4,11 +4,11 @@ import { View } from './../view/view.module';
 export class Controller {
   private model: Model;
   private view: View;
+
   constructor(model, view) {
     this.model = model;
     this.view = view;
 
-    // this.model.bindTaskListChange(this.onTaskListChange);
     this.onCardListChange(this.model.timeCards);
     this.model.bindCardListChange(this.onCardListChange);
     this.view.bindAddTask(this.handleAddTask);
@@ -22,8 +22,8 @@ export class Controller {
     this.model.addTask(task);
   }
 
-  public handleEditTask = (id, task) => {
-    this.model.editTask(id, task);
+  public handleEditTask = (cardTaskParams) => {
+    this.model.editTask(cardTaskParams);
   }
 
   public handleDeleteTask = (id) => {
@@ -41,5 +41,4 @@ export class Controller {
   public onCardListChange = (cards) => {
     this.view.displayCards(cards);
   }
-
 }

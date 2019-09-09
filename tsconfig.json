@@ -1,19 +1,15 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "pretty": true,
-      "sourceMap": true,
-      "target": "es5",
-      "outDir": "./dist",
-      "baseUrl": "./src",
-      "allowSyntheticDefaultImports": true
+    "lib": ["dom", "es5", "es6"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "pretty": true,
+    "sourceMap": true,
+    "target": "es6",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true
   },
-  "include": [
-      "src/**/*.ts"
-  ],
-  "exclude": [
-      "node_modules",
-      "dist"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
