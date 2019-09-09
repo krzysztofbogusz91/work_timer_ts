@@ -59,8 +59,13 @@ export class View {
       const li = this.factory.crateElement('li');
       li.innerText = card.date;
       li.id = card.id;
+      const form = this.crateElem('form');
       const input = this.factory.crateElement('input');
-      li.append(input);
+      input.classList.add('input-' + card.id);
+      const submitButton = this.crateElem('button');
+      submitButton.textContent = 'Add task';
+      form.append( input, submitButton);
+      li.append(form);
       const ul = this.factory.crateElement('ul');
       this.listFactory.createListElements(card.tasks, ul);
       li.append(ul);
@@ -83,10 +88,11 @@ export class View {
   }
 
  public bindAddTask(handler) {
-  const cards = this.cardsContainer.childNodes;
-  this.form.addEventListener('submit', (event) => {
+  this.cardsContainer.addEventListener('submit', (event) => {
       event.preventDefault();
-
+      const cardId = parseInt(event.target.parentElement.id);
+      const value = (document.querySelector(`.input-${cardId}`) as any).value;
+      console.log(cardId, value);
       if (this._taskText) {
         handler(this._taskText);
         this._resetTaskInput();
@@ -95,17 +101,12 @@ export class View {
   }
 
   public bindDeleteTask(handler) {
-    const cards = this.cardsContainer.childNodes;
-
-    cards.forEach((card) => {
-      card.lastChild.addEventListener('click', (event) => {
-        if (event.target.className === 'delete') {
-          console.log('add ev list');
-          const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
-          const taskId = parseInt(event.target.parentElement.id);
-          handler({cardId, taskId});
-        }
-      });
+    this.cardsContainer.addEventListener('click', (event) => {
+      if (event.target.className === 'delete') {
+        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
+        const taskId = parseInt(event.target.parentElement.id);
+        handler({cardId, taskId});
+      }
     });
   }
 
