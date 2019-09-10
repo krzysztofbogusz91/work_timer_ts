@@ -39,9 +39,15 @@ export class View {
 
       const dateHeader = this.factory.crateElement('h3', 'date-header');
       dateHeader.innerText = moment(card.date).format('L');
-
-      const header = this.factory.crateElement('h2', 'card-header');
-      header.innerText = 'Worked: ' + moment.utc(card.time * 1000).format('HH:mm');
+      let header;
+      if (card.isToday) {
+        header = this.factory.crateElement('input', 'start-time-input');
+        header.value = '08:00';
+        header.placeholder = 'set timer';
+      } else {
+        header = this.factory.crateElement('h2', 'card-header');
+        header.innerText = card.time;
+      }
 
       const form = this.crateElem('form');
 

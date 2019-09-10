@@ -36,8 +36,8 @@ export class ListElement extends Element {
 
         const deleteButton = this.crateElement('button', 'delete');
         deleteButton.textContent = 'Delete';
+
         this.generateFlexView(li, check, span, deleteButton);
-        // li.append(check, span, deleteButton);
 
         parentElement.append(li);
       });

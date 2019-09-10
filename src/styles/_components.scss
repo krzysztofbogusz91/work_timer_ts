@@ -20,6 +20,17 @@ button {
   border-radius: 5px;
 }
 
+.start-time-input{
+  display: block;
+  padding: 0;
+  font-size: 1.5em;
+  width: 4em;
+  background-color: $base-color;
+  margin: 2px 0;
+  border: none;
+  border-radius: 5px;
+}
+
 .cards-container {
   padding: 0;
   margin: 0;

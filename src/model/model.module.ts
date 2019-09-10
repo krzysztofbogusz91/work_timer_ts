@@ -2,7 +2,7 @@ import * as moment from 'moment';
 interface ITimerCard {
   id: number;
   date: any;
-  time: number;
+  time: string;
   isToday: boolean;
   tasks: any[];
 }
@@ -16,16 +16,27 @@ export class Model {
   }
 
   public createTimeCards(tasks?): ITimerCard[] {
-    const firstDay = moment().subtract(15, 'days');
+    return [...new Array(30)].map((el, i) => this.createTimeCard(el, i));
+  }
 
-    const timeCards = [...new Array(30)].map((el, i) => ({
-      date: firstDay.clone().add(i + 1, 'day').toDate(),
-      id: i + 1,
-      isToday: firstDay.clone().add(i + 1, 'day').format('yyyymmdd') === moment().format('yyyymmdd'),
-      tasks: [],
-      time: 8 * 3600,
-    }));
-    return timeCards;
+ public createTimeCard(el, index): ITimerCard {
+   const id = index + 1;
+   const firstDay = moment().subtract(15, 'days');
+   const tasks = [];
+   const date = firstDay.clone().add(index + 1, 'day').toDate();
+   const isToday = +date === +moment().toDate();
+   const time =  this.setTimeText(date);
+   const card = {};
+
+   return Object.assign(card, { id, date, isToday, time, tasks});
+  }
+
+  public setTimeText(cardDay): string {
+    if (moment().toDate() >= cardDay ) {
+      return 'Worked: ' + moment.utc(8 * 3600 * 1000).format('HH:mm');
+    } else {
+      return '';
+    }
   }
 
   public addTask(cardIdTaskValue) {
