@@ -1,48 +1,52 @@
-
 button {
-    background-color: $button-color;
-    color: white;
-    padding: 7px 20px;
-    margin: 10px;
-    border: none;
+  background-color: $button-color;
+  color: white;
+  padding: 7px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.card-header,
+.date-header {
+  color: $secondary-color;
+  text-transform: uppercase;
+}
+
+.add-task-input {
+  padding: 7px 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.cards-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 95%;
+  .cards-container-element {
+    background-color: $base-color;
+    margin: 20px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
     border-radius: 5px;
   }
-  
-  .card-header, .date-header  {
-    color: $secondary-color;
-    text-transform: uppercase;
-  }
-  
-  
-  
-  .add-task-input {
-    padding: 7px 10px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 5px;
-  }
-  .cards-container{
-    .cards-container-element {
-      background-color: $base-color;
-      margin: 20px 0;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      list-style: none;
-      border-radius: 5px;
+}
+.task-list {
+  .task-list-element {
+    &:first-child {
+      border-top: 2px solid $secondary-color;
     }
+    @include flex-row-parent;
+    border-bottom: 2px solid $secondary-color;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
   }
-  .task-list {
-    .task-list-element {
-        &:first-child{
-            border-top: 2px solid $secondary-color;
-        }
-        @include flex-row-parent;      
-        border-bottom: 2px solid $secondary-color;
-        justify-content: space-around;
-        align-items: center;
-        list-style: none;
-    }
-  }
-  
-  
+}
