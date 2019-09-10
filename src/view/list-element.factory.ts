@@ -37,7 +37,7 @@ export class ListElement extends Element {
         const deleteButton = this.crateElement('button', 'delete');
         deleteButton.textContent = 'Delete';
         this.generateFlexView(li, check, span, deleteButton);
-        li.append(check, span, deleteButton);
+        // li.append(check, span, deleteButton);
 
         parentElement.append(li);
       });
@@ -46,7 +46,12 @@ export class ListElement extends Element {
  private generateFlexView(parent, ...args) {
       const divCreator = (cssClass = '') => this.crateElement('div', cssClass);
       const argumentsList = [...Array.from(arguments).splice(1, arguments.length)];
-      console.log('parent', parent);
-      console.log('children', argumentsList);
+      const flexParent = divCreator('flex-container');
+      argumentsList.forEach((elem) => {
+        const elemContainer = divCreator('flex-elem');
+        elemContainer.append(elem);
+        flexParent.append(elemContainer);
+      });
+      parent.append(flexParent);
     }
 }
