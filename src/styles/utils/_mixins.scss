@@ -1,5 +1,4 @@
 @mixin flex-row-parent {
     display: flex;
-    flex-basis: row;
-
+    flex-direction: row;
 }

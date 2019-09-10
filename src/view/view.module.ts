@@ -80,8 +80,8 @@ export class View {
   public bindDeleteTask(handler) {
     this.cardsContainer.addEventListener('click', (event) => {
       if (event.target.className === 'delete') {
-        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
-        const taskId = parseInt(event.target.parentElement.id);
+        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id);
+        const taskId = parseInt(event.target.parentElement.parentElement.parentElement.id);
         handler({cardId, taskId});
       }
     });
@@ -90,8 +90,8 @@ export class View {
   public bindToggleTask(handler) {
     this.cardsContainer.addEventListener('change', (event) => {
       if (event.target.type === 'checkbox') {
-        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
-        const id = parseInt(event.target.parentElement.id);
+        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id);
+        const id = parseInt(event.target.parentElement.parentElement.parentElement.id);
         handler({cardId, id});
       }
     });
@@ -109,7 +109,7 @@ export class View {
     this.cardsContainer.addEventListener('focusout', (event) => {
       if (this.temporaryTaskText) {
         const id = parseInt(event.target.parentElement.id);
-        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.id);
+        const cardId = parseInt(event.target.parentElement.parentElementparentElement.parentElement.parentElement.id);
         handler({cardId, id, text: this.temporaryTaskText});
         this.temporaryTaskText = '';
       }
