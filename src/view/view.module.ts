@@ -57,7 +57,10 @@ export class View {
       const submitButton = this.crateElem('button');
       submitButton.textContent = 'Add task';
 
-      form.append(dateHeader, header, input, submitButton);
+      const formContainer = this.crateElem('div', 'add-form-container');
+      formContainer.append(input, submitButton);
+
+      form.append(dateHeader, header, formContainer);
 
       li.append(form);
 
