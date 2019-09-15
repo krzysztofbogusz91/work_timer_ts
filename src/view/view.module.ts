@@ -42,6 +42,7 @@ export class View {
       let header;
       if (card.isToday) {
         header = this.factory.crateElement('input', 'start-time-input');
+        header.id = 'active-day';
         header.value = '08:00';
         header.placeholder = 'set timer';
       } else {
@@ -71,6 +72,7 @@ export class View {
       li.append(ul);
 
       this.cardsContainer.append(li);
+
     });
   }
 
@@ -124,7 +126,11 @@ export class View {
       }
     });
   }
-
+  public initDisplayPosition() {
+    setTimeout(() => {
+      document.getElementById('active-day').scrollIntoView({behavior: 'smooth'});
+    }, 500);
+  }
   private _resetTaskInput(cardId) {
     (document.querySelector(`.input-${cardId}`) as any).value = '';
   }

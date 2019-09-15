@@ -16,6 +16,7 @@ export class Controller {
     this.view.bindToggleTask(this.handleToggleTask);
     this.view.bindEditTask(this.handleEditTask);
 
+    this.view.initDisplayPosition();
   }
 
   public handleAddTask = (task) => {
