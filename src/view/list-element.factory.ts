@@ -43,7 +43,7 @@ export class ListElement extends Element {
       });
 
     }
- private generateFlexView(parent, ...args) {
+ public generateFlexView(parent, ...args) {
       const divCreator = (cssClass = '') => this.crateElement('div', cssClass);
       const argumentsList = [...Array.from(arguments).splice(1, arguments.length)];
       const flexParent = divCreator('flex-container');

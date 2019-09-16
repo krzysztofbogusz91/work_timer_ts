@@ -41,10 +41,17 @@ export class View {
       dateHeader.innerText = moment(card.date).format('L');
       let header;
       if (card.isToday) {
-        header = this.factory.crateElement('input', 'start-time-input');
-        header.id = 'active-day';
-        header.value = '08:00';
-        header.placeholder = 'set timer';
+        header = this.crateElem('div', 'timer-header-container');
+        const headerInput = this.factory.crateElement('input', 'start-time-input');
+        headerInput.id = 'active-day';
+        headerInput.value = '08:00';
+        headerInput.placeholder = 'set timer';
+        const startButton = this.crateElem('button', 'start-button');
+        startButton.innerText = '>';
+        const stopButton = this.crateElem('button', 'stop-button');
+        stopButton.innerText = '||';
+
+        this.listFactory.generateFlexView(header, headerInput, startButton, stopButton);
       } else {
         header = this.factory.crateElement('h2', 'card-header');
         header.innerText = card.time;
@@ -67,7 +74,13 @@ export class View {
 
       const ul = this.factory.crateElement('ul', 'task-list');
 
-      this.listFactory.createListElements(card.tasks, ul);
+      if (card.tasks.length === 0) {
+        const p = this.crateElem('p', 'nothing-msg');
+        p.innerText = 'Nothing to do!';
+        ul.append(p);
+      } else {
+        this.listFactory.createListElements(card.tasks, ul);
+      }
 
       li.append(ul);
 
@@ -120,7 +133,7 @@ export class View {
     this.cardsContainer.addEventListener('focusout', (event) => {
       if (this.temporaryTaskText) {
         const id = parseInt(event.target.parentElement.id);
-        const cardId = parseInt(event.target.parentElement.parentElementparentElement.parentElement.parentElement.id);
+        const cardId = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id);
         handler({cardId, id, text: this.temporaryTaskText});
         this.temporaryTaskText = '';
       }
