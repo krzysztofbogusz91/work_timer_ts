@@ -43,7 +43,7 @@ export class View {
       if (card.isToday) {
         header = this.crateElem('div', 'timer-header-container');
         const headerInput = this.factory.crateElement('input', 'start-time-input');
-        headerInput.id = 'active-day';
+        li.id = 'active-day';
         headerInput.value = '08:00';
         headerInput.placeholder = 'set timer';
         const startButton = this.crateElem('button', 'start-button');
@@ -141,7 +141,10 @@ export class View {
   }
   public initDisplayPosition() {
     setTimeout(() => {
-      document.getElementById('active-day').scrollIntoView({behavior: 'smooth'});
+      document.getElementById('active-day').scrollIntoView({behavior: 'smooth',
+      block: 'center' , inline: 'center',
+    });
+
     }, 500);
   }
   private _resetTaskInput(cardId) {
